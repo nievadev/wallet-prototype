@@ -1,0 +1,60 @@
+[
+    {
+        "model": "wallet_base.wallet",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "datetime_created": "2003-08-29T16:24:00.681Z",
+            "code": "123",
+            "wallet_number": "234ds",
+            "tax_code": null,
+            "culture": "es-ar"
+        }
+    },
+    {
+        "model": "wallet_base.wallettransaction",
+        "pk": 2,
+        "fields": {
+            "wallet": 1,
+            "code": "555",
+            "description": "created transaction by user",
+            "object_id": 0,
+            "object_name": null,
+            "status": "a",
+            "currency": "ARS",
+            "amount": 12000.0,
+            "datetime_available": "2024-04-23T19:28:21.306Z",
+            "datetime_expiration": "2030-08-29T16:24:00.681Z",
+            "datetime_added": "2024-02-19T19:28:21.306Z"
+        }
+    },
+    {
+        "model": "wallet_base.wallettransaction",
+        "pk": 1,
+        "fields": {
+            "wallet": 1,
+            "code": "xxxx",
+            "description": "created transaction by user",
+            "object_id": 0,
+            "object_name": null,
+            "status": "c",
+            "currency": "ARS",
+            "amount": 12000.0,
+            "datetime_available": "2024-04-23T19:28:21.306Z",
+            "datetime_expiration": "2030-08-29T16:24:00.681Z",
+            "datetime_added": "2024-02-19T19:28:21.306Z"
+        }
+    },
+    {
+        "model": "wallet_base.walletextractionrequest",
+        "pk": 1,
+        "fields": {
+            "wallet_transaction": 1,
+            "datetime_resolution": null,
+            "datetime_request": "2024-02-19T19:28:21.307Z",
+            "status": "r",
+            "description": "created transaction by user",
+            "operator": 1
+        }
+    }
+]

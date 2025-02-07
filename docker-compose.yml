@@ -1,0 +1,54 @@
+services:
+  postgres:
+      container_name: postgres
+      hostname: postgres
+      image: postgres:15.10-bookworm
+      volumes:
+          - ${POSTGRES_DATA_PATH}:/var/lib/postgresql/data
+      environment:
+          - POSTGRES_PASSWORD=${POSTGRES_ROOT_PASSWORD}
+          - POSTGRES_USER=${POSTGRES_USER}
+      ports:
+          - 5433:5432
+      networks:
+          - wallet-pod
+
+  redis:
+      container_name: redis
+      hostname: redis
+      image: redis:alpine
+      volumes:
+          - ./redis_config/:/usr/local/etc/redis/
+      restart: unless-stopped
+      ports:
+          - 512:511
+      mem_limit: 1g
+      networks:
+          - wallet-pod
+
+  runserver:
+      container_name: runserver
+      hostname: runserver
+      image: wallet-runserver:1
+      volumes:
+          - ${SITE_PATH}:/code
+          - ${KEY_PATH}:/keys
+      environment:
+          - DB_USER=${POSTGRES_USER}
+          - DB_PASSWORD=${POSTGRES_ROOT_PASSWORD}
+          - DB_HOST=postgres
+          - DB_PORT=5432
+          - DB_NAME=wallet
+          - CACHE_REDIS_HOST=redis
+          - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+          - AES_KEY_PATH=${AES_KEY_PATH}
+          - SENTRY_KEY=${SENTRY_KEY}
+      ports:
+          - 8080:8080
+      mem_limit: 6g
+      networks:
+          - wallet-pod
+
+networks:
+  wallet-pod:
+    driver: bridge
